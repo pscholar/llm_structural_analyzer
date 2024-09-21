@@ -2,7 +2,6 @@
 import prompts as prp
 import openai
 llm_messages = [ {"role": "system", "content": prp.api_doc()} ]
-
 def llm_generate_script(task):
   llm_messages.append(
           {"role": "user", "content": task},
