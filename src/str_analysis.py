@@ -1,16 +1,18 @@
-##contains functions that can be called to perform structural analysis
-##of a simply supported beam, with uniform loading , point loading 
-## or both.
+## This file contains functions that can be called to perform structural analysis
+## of a simply supported beam, with uniform loading , point loading 
+
+## This module is not robust,and was simply developed experimental puporse
+## It has not been well tested to be used in production software.
 
 import json
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-#number of points along the beam length
+
+# number of points along the beam length, 
+# at which shear and bending moment is to be computed
 str_analysis_resolution = 1000 
 
-#dictionary against which validation is to be made.
 results ={
   "l_reaction": 0,
   "r_reaction":0,
@@ -27,18 +29,12 @@ def create_load_config(type,value, distance):
   return load_config
 
 def calc_reactions_pld(beam_length,load_config):
-  """
-  computes ractions at supports due to point load
-  """
   reactions = [0.0] * 2
   reactions[0] = load_config["lvalue"] * (beam_length - load_config["ldist"]) / beam_length
   reactions[1] = load_config["lvalue"] - reactions[0]
   return reactions
 
 def calc_reactions_udl(beam_length, udl_load_config):
-  """
-  computes reactions at supports due to uniformly distributed load
-  """
   if  beam_length != udl_load_config["ldist"]:
     ##handle this error, only a full udl is supported
     print("Unsupported UDL configuration\n");
@@ -48,9 +44,6 @@ def calc_reactions_udl(beam_length, udl_load_config):
   return reactions
   
 def superpose_reactions(reactions):
-  """
-  superposes reaction from different load considerations
-  """
   R1 = 0.0
   R2 = 0.0
   for item in reactions:
@@ -59,9 +52,6 @@ def superpose_reactions(reactions):
   return [R1,R2]
 
 def calc_support_reactions(beam_length,config):
-  """
-  computes reactions at supports
-  """
   reactions = list()
   for load_config in config:
     if load_config["ltype"] == "P":
@@ -186,76 +176,38 @@ def calc_max_bmoment(bmoment):
   results["max_moment"] = max_moment
   return max_moment
 
+def generate_xpoints(beam_length):
+  xpoints = list()
+  increment = beam_length / 1000
+  i = 0
+  while i <= beam_length:
+    xpoints.append(i)
+    i += increment
+  return xpoints
+
 def plot_graph(xpoints, ypoints, title,xlabel, ylabel):
+  plt.figure()
+  plt.ion()
   plt.plot(xpoints, ypoints)
   plt.xlabel(xlabel)
   plt.ylabel(ylabel)
   plt.title(title)
-  plt.show()
+  plt.show(block = False)
+  input(" Press any Enter to Continue........")
+  plt.savefig(title + ".png")
+  print(f" {title} saved to {title + ".png"}")
 
 def draw_shear_diagram(beam_length, shear_values):
-  xpoints = list()
-  increment = beam_length / 1000
-  i = 0
-  while i <= beam_length:
-    xpoints.append(i)
-    i += increment
-  plot_graph(np.array(xpoints), np.array(shear_values),"SFD","x(m)","V(kN)");
+  xpoints = generate_xpoints(beam_length)
+  print("====Displaying Shear Force Diagram=====")
+  plot_graph(np.array(xpoints), np.array(shear_values),"Shear Force Diagram","x(m)","V(kN)")
   
 def draw_moment_diagram(beam_length, moment_values):
-  xpoints = list()
-  increment = beam_length / 1000
-  i = 0
-  while i <= beam_length:
-    xpoints.append(i)
-    i += increment
-  plot_graph(np.array(xpoints), np.array(moment_values),"BMD","x(m)","M(kNm)");
+  xpoints = generate_xpoints(beam_length)
+  print("====Displaying Bending Moment Diagram=====")
+  plot_graph(np.array(xpoints), np.array(moment_values),"Bending Moment Diagram","x(m)","M(kNm)")
 
-#save results json
 def save_results():
   with open("results.json","w") as file:
     json.dump(results,file,indent=4)
     file.close()
-
-def main():
-  beam_length = 5
-  i = 0
-  while i < 5:
-    config = list()
-    #config.append(create_load_config("U",10.0,5))
-    config.append(create_load_config("P",10.0,2.5))
-    reactions = calc_support_reactions(beam_length,config)
-    print(reactions)
-    shear = calc_shear(beam_length,config)
-    max_shear = calc_max_shear(shear)
-    print(max_shear)
-    #max_moment = calc_max_bmoment(beam_length,config)
-    #print(max_moment)
-    os.system("py analyze.py")
-    i += 1
-main()
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
