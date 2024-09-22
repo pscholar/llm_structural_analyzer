@@ -7,7 +7,7 @@ The architecture below was used for the project. The source files  can be found 
 
 ## **Architecture Used**
 
-![Archictecture](llm_architecture.png)
+![Archictecture](llm_architecture.png)  
 
 The **LLM** is provided with API documentation of functions and data structures in the **str_analysis** module.  
 This module contains functions that know how to perform structural analysis, of a simply supported beam.  
