@@ -51,7 +51,7 @@ def analyze_beam(beam_length, load_config):
 
     #save results
     sa.save_results()
-
+# Given beam details
 beam_length = 8  # Beam length in meters
 load_config = [ 
     {'lvalue': 5, 'ltype': 'U', 'ldist': 8},   # 5 kN/m UDL along the entire beam
