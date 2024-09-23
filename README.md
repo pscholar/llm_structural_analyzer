@@ -72,4 +72,4 @@ analyze_beam(beam_length, load_config)
 ## **A Robust Architecture For Complex Structural Analysis Tasks?**
 
 The tasks given here were relatively simple. However, it demonstrated that with an appropriate architecture; these LLMs can  be utilizied to write input data configuration files and scripts, calling API of existing structural analysis software to perform structural analysis.  
-The ability of these GPTs should be tested more on complex tasks, for which a more robust architecture would be required.  
+The ability of these emerging LLMs should be tested more on complex structural design tasks, for which a more robust architecture would be required.  
