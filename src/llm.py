@@ -1,10 +1,14 @@
+#This file contains functions that interface with openai API
 
 import prompts as prp
 import openai
 import re
+import os
 
-openai.api_key = "PLACE YOUR API KEY HERE"
-ai_model = "PLACE MODDEL VERSION HERE"
+#assume the key and model  to use are stored in environment variables.
+# TODO add error handling when None is returned
+openai.api_key = os.environ.get('OPENAI_API_KEY')
+ai_model = os.environ.get('OPENAI_GPT_MODEL')
 llm_messages = [ {"role": "system", "content": prp.api_doc()} ]
 
 def llm_generate_script(task):
