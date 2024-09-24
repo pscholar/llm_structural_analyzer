@@ -69,7 +69,8 @@ analyze_beam(beam_length, load_config)
 ![Shear Force Diagram](Shear_Force_Diagram.png)  
 ![Bending Moment Diagram](Bending_Moment_Diagram.png)  
 
-## **Discussion**
+## **A Robust Architecture for a Complex Structural Design Task?**
 
-The tasks given here were relatively simple. However, it demonstrated that with an appropriate architecture; these LLMs can  be utilizied to write input data configuration files and scripts, calling API of existing structural analysis software to perform structural analysis.  
-The ability of these GPTs should be tested more on complex tasks, for which a more robust architecture would be required.  
+- The task given here was relatively simple. However, it demonstrated that with an appropriate architecture; these LLMs can  be utilizied to write input data configuration files and scripts, calling API of existing structural analysis software to perform structural analysis.
+- This simple architecture automated analysis of a simply supported beam, which would rather take considerable user involvement when directly using an existing dedicated structural analysis software.
+- The performance of these emerging LLMs should be investigated more on complex structural design tasks, for which a more robust architecture would be required.  
